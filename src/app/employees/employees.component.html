@@ -1,0 +1,128 @@
+
+<p-panel class="ui-g-12" header="EmployeeDetail">
+    
+        <p-tabView>
+              <!-- <p-tabPanel header="Statistics">
+                  <div class="ui-g">
+                      <label class="ui-g-12 ui-md-2" for="employee">Employee Name</label>
+                      <input class="ui-g-12 ui-md-10" id="employee" type="text"  placeholder="Enter Employee Name"/>
+                    </div>
+                    <div class="ui-g">
+                      <label class="ui-g-12 ui-md-2" for="address">Employee Address</label>
+                      <input class="ui-g-12 ui-md-10" id="address" type="text"  placeholder="Enter Employee Address"/>
+                    </div> 
+                    <div class="ui-g">
+                      <label class="ui-g-12 ui-md-2" for="address">Employee Phone</label>
+                      <input class="ui-g-12 ui-md-10" id="address" type="text"  placeholder="Enter Employee Address"/>
+                  </div>
+                  <div class="ui-g">
+                      <label class="ui-g-12 ui-md-2" for="address">Employee Rating</label>
+                      <input class="ui-g-12 ui-md-10" id="address" type="text"  placeholder="Enter Employee Address"/>
+                    </div> 
+
+                
+                    <div class="ui-g">
+                      <label for="statistics" class="ui-g-12 ui-md-2">Task Accomplishment Stats</label>
+                      <div id="statistics "class="ui-g-12 ui-md-2">
+                        <div class="icon ui-g-4 ui-md-4">
+                          <i class="fa fa-cloud-download"></i>
+                        </div>
+                        <div class="data ui-g-8 ui-md-8">
+                          <div class="value">98</div>
+                          <div class="label">Percent</div>
+                        </div>
+                      </div>
+                    </div>
+              </p-tabPanel>  -->
+    
+            <!-- Data Table -->
+    
+            <p-tabPanel header="Data Table">
+              
+                <p-dataTable [value]="employeeList" selectionMode="single" [(selection)]="selectedEmployee" (onRowSelect)="onRowSelect($event)" 
+                [paginator]="true" [rows]="10" [responsive]="true"  [loading]="loading" loadingIcon="fa-refresh">
+                    <p-header>Employees</p-header>
+                    <p-column field="name" header="Employee name" [editable]="true"[sortable]="true"></p-column>
+                    <p-column field="address" header="Address" [sortable]="true"></p-column>
+                    <p-column field="phone" header="Telephone" [sortable]="true"></p-column>
+                    <p-column field="rating" header="Rating" [sortable]="true"></p-column>
+                    <p-footer>
+                      <div class="ui-helper-clearfix" style="width:100%">
+                        <button type="button" pButton icon="fa-plus" style="float:left" (click)="addEmployee()" label="Add">
+                          </button>
+                        </div>
+                    </p-footer>
+                </p-dataTable>
+
+                <!-- <p-dialog header="Employee Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+                    <div class="ui-grid ui-grid-responsive ui-fluid ui-grid-pad" *ngIf="employee">
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"><label for="name">Employee Name</label></div>
+                            <div class="ui-grid-col-8"><input pInputText id="name" [(ngModel)]="employee.name" /></div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"><label for="address">Address</label></div>
+                            <div class="ui-grid-col-8"><input pInputText id="address" [(ngModel)]="employee.address" /></div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"><label for="phone">Telephone</label></div>
+                            <div class="ui-grid-col-8"><input pInputText id="phone" [(ngModel)]="employee.phone" /></div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"><label for="rating">Rating</label></div>
+                            <div class="ui-grid-col-8"><input pInputText id="rating" [(ngModel)]="employee.rating" /></div>
+                        </div>
+                    </div>
+                <footer>
+                    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+                        <button type="button" pButton icon="fa-close" (click)="delete()" label="Delete"></button>
+                        <button type="button" pButton icon="fa-check" (click)="save()" label="Save"></button>
+                    </div>
+                </footer>
+                </p-dialog> -->
+            </p-tabPanel>
+    
+              <!-- End of DataTable -->
+    
+            <p-tabPanel header="Tree View">
+                Content 3    
+            </p-tabPanel>
+            <p-tabPanel header="Drag And Drop">
+                Content 3    
+            </p-tabPanel>
+            <p-tabPanel header="Picklist">
+                Content 3    
+            </p-tabPanel>
+        </p-tabView>
+        
+    </p-panel>
+  
+    <p-panel  header="Employee Details" [toggleable]="true" *ngIf="selectedEmployee">
+        <div class="ui-g">
+                 <div class="ui-g-6">
+                     <div class="ui-g-4"><label for="name">Employee Name</label></div>
+                     <div class="ui-g-8"><input pInputText id="name" [(ngModel)]="selectedEmployee.name" /></div>
+                 </div>
+                 <div class="ui-g-6">
+                     <div class="ui-g-4"><label for="address">Address</label></div>
+                     <div class="ui-g-8"><input pInputText id="address" [(ngModel)]="selectedEmployee.address" /></div>
+                 </div>
+                 <div class="ui-g-6">
+                     <div class="ui-g-4"><label for="phone">Telephone</label></div>
+                     <div class="ui-g-8"><input pInputText id="phone" [(ngModel)]="selectedEmployee.phone" /></div>
+                 </div>
+                 <div class="ui-g-6">
+                     <div class="ui-g-4"><label for="rating">Rating</label></div>
+                     <div class="ui-g-8"><input pInputText id="rating" [(ngModel)]="selectedEmployee.rating" /></div>
+                 </div>
+             </div>
+         <footer>
+             <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+                <button type="button" pButton icon="fa-floppy-o" (click)="saveEmployee()" label="Save"></button>
+                <button type="button" pButton icon="fa-trash-o" (click)="cancelEmployee()" label="Cancel"></button>
+                 
+             </div>
+         </footer>
+
+     </p-panel>
+     
