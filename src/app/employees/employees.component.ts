@@ -12,6 +12,9 @@ import { Employeeclass } from './../domain/employeeclass';
 })
 export class EmployeesComponent implements OnInit {
 
+  clonedSelectedEmployee: Employee;
+  indexSelected: number;
+
   employeeList: Employee[];
   selectedEmployee: Employee;
   cloneEmployee: Employee;
@@ -33,20 +36,35 @@ export class EmployeesComponent implements OnInit {
 
   addEmployee() {
     this.isNewEmployee = true;
-    this.employee = new Employeeclass;
+     this.selectedEmployee = new Employeeclass;
     this.displayDialog = true;
   }
 
   saveEmployee() {
     let tmpEmployeeList = [...this.employeeList];
-    if(this.isNewEmployee)
-        this.employeeList.push(this.selectedEmployee);
-    else
+    if(this.isNewEmployee){
+        this.employeeService.addEmployees(this.selectedEmployee);
+        tmpEmployeeList.push(this.selectedEmployee);
+    }else{
+        this.employeeService.saveEmployees(this.selectedEmployee);
         tmpEmployeeList[this.employeeList.indexOf(this.selectedEmployee)] = this.selectedEmployee;
-
+    }
+    this.employeeService.saveEmployees(this.selectedEmployee);
     this.employeeList = tmpEmployeeList;
     this.selectedEmployee = null;
     this.displayDialog = false;
+ 
+  }
+
+  deleteEmployee(){
+    if(this.selectedEmployee){
+      let index = this.findSelectedEmployeeIndex();
+      this.employeeList = this.employeeList.filter((val,i) => i!=index);
+      this.employeeService.deleteEmployees(this.selectedEmployee.employeeId);
+      this.selectedEmployee = null;
+      this.displayDialog = false;
+    }
+     
   }
 
   onRowSelect(event) {
@@ -70,6 +88,7 @@ export class EmployeesComponent implements OnInit {
     tmpEmployeeList[this.employeeList.indexOf(this.selectedEmployee)] = this.cloneEmployee;
     this.employeeList = tmpEmployeeList;
     this.selectedEmployee = this.cloneEmployee;
+    this.selectedEmployee = null;
   }
 
   findSelectedEmployeeIndex(): number {
