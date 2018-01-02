@@ -1,0 +1,76 @@
+
+<p-panel class="ui-g-12" header="AppointmentDetail">
+    
+ <p-dataTable [value]="appointmentList" selectionMode="single" [(selection)]="selectedAppointment" (onRowSelect)="onRowSelect($event)" 
+ [paginator]="true" [rows]="10" [responsive]="true"  [loading]="loading" loadingIcon="fa-refresh">
+     <p-header>Appointments</p-header>
+     <p-column field="guestName" header="GuestName" [editable]="true"[sortable]="true"></p-column>
+     <p-column field="hostName" header="HostName" [sortable]="true"></p-column>
+     <p-column field="startTime" header="Start Time" [sortable]="true"></p-column>
+     <p-column field="endTime" header="End Time" [sortable]="true"></p-column>
+     <p-column field="isCancelled" header="isCancelled" [sortable]="true"></p-column>
+     <p-column field="isDone" header="isDone" [sortable]="true"></p-column>
+     <p-column field="notes" header="Notes" [sortable]="true"></p-column>
+     <p-column field="appointmentDate" header="appointmentDate" [sortable]="true"></p-column>
+     <p-footer>
+         <div class="ui-helper-clearfix" style="width:100%">
+         <button type="button" pButton icon="fa-plus" style="float:left" (click)="addAppointment()" label="Add">
+             </button>
+         <button type="button" pButton icon="fa-plus" style="float:left" (click)="deleteAppointment()" label="Delete">
+             </button>
+         </div>
+     </p-footer>
+ </p-dataTable>
+            
+</p-panel>
+
+ <p-panel  header="Appointment Details" [toggleable]="true" *ngIf="selectedAppointment">
+     <div class="ui-g">
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="guestId">GuestId</label></div>
+                  <div class="ui-g-8"> <p-dropdown optionLabel="firstName" [options]="guestList" id="country" [(ngModel)]="selectedGuest"></p-dropdown>
+                </div>
+              </div>
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="hostId">HostId</label></div>
+                  <div class="ui-g-8"><p-dropdown optionLabel="firstName" [options]="hostList" id="country" [(ngModel)]="selectedHost"></p-dropdown>
+             </div>
+              </div>
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="startTime">startTime</label></div>
+                  <div class="ui-g-8"><input pInputText id="startTime" [(ngModel)]="selectedAppointment.startTime" /></div>
+              </div>
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="endTime">endTime</label></div>
+                  <div class="ui-g-8"><input pInputText id="endTime" [(ngModel)]="selectedAppointment.endTime" /></div>
+              </div>
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="isCancelled">isCancelled</label></div>
+                  <div class="ui-g-8"><input pInputText id="isCancelled" [(ngModel)]="selectedAppointment.isCancelled" /></div>
+              </div>
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="isDone">isDone</label></div>
+                  <div class="ui-g-8"> 
+                    
+                   <input pInputText id="isDone" [(ngModel)]="selectedAppointment.isDone" /></div> 
+              </div>
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="notes">Notes</label></div>
+                  <div class="ui-g-8"><input pInputText id="notes" [(ngModel)]="selectedAppointment.notes" /></div>
+              </div>
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="appointmentDate">appointmentDate</label></div>
+                  <div class="ui-g-8"><input pInputText id="appointmentDate" [(ngModel)]="selectedAppointment.appointmentDate" /></div>
+              </div>
+            
+          </div>
+      <footer>
+          <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+             <button type="button" pButton icon="fa-floppy-o" (click)="saveAppointment()" label="Save"></button>
+             <button type="button" pButton icon="fa-trash-o" (click)="cancelAppointment()" label="Cancel"></button>
+              
+          </div>
+      </footer>
+
+  </p-panel>
+  

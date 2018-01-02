@@ -22,7 +22,7 @@ constructor(private http: HttpClient) {}
                 .then(data => { return data as Employee[]; });
     }
     saveEmployees(employee) {
-        return this.http.put('http://localhost:55775/api/employees/?id='+ employee.employeeId,employee)
+        return this.http.put('http://localhost:55775/api/employees/?id='+ employee.employeeId, employee)
                 .toPromise()
                 .then(data => { return data as Employee[]; });
     }

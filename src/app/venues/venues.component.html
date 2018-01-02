@@ -1,0 +1,43 @@
+
+<p-panel class="ui-g-12" header="VenueDetail">
+    
+ <p-dataTable [value]="venueList" selectionMode="single" [(selection)]="selectedVenue" (onRowSelect)="onRowSelect($event)" 
+ [paginator]="true" [rows]="10" [responsive]="true"  [loading]="loading" loadingIcon="fa-refresh">
+     <p-header>Venues</p-header>
+     <p-column field="venueId" header="venueId" [editable]="true"[sortable]="true"></p-column>
+     <p-column field="venueName" header="venueName" [sortable]="true"></p-column>
+     <p-column field="description" header="description" [sortable]="true"></p-column>
+     
+     <p-footer>
+         <div class="ui-helper-clearfix" style="width:100%">
+         <button type="button" pButton icon="fa-plus" style="float:left" (click)="addVenue()" label="Add">
+             </button>
+         <button type="button" pButton icon="fa-plus" style="float:left" (click)="deleteVenue()" label="Delete">
+             </button>
+         </div>
+     </p-footer>
+ </p-dataTable>
+</p-panel>
+
+ <p-panel  header="Venue Details" [toggleable]="true" *ngIf="selectedVenue">
+     <div class="ui-g">
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="venueName">Venue Name</label></div>
+                  <div class="ui-g-8"><input pInputText id="venueName" [(ngModel)]="selectedVenue.venueName" /></div>
+              </div>
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="description">Description</label></div>
+                  <div class="ui-g-8"><input pInputText id="description" [(ngModel)]="selectedVenue.description" /></div>
+              </div>          
+            
+          </div>
+      <footer>
+          <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+             <button type="button" pButton icon="fa-floppy-o" (click)="saveVenue()" label="Save"></button>
+             <button type="button" pButton icon="fa-trash-o" (click)="cancelVenue()" label="Cancel"></button>
+              
+          </div>
+      </footer>
+
+  </p-panel>
+  

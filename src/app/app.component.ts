@@ -21,13 +21,13 @@ export class AppComponent  {
       this.items = [
         {label: 'Dashboard', icon: 'fa-home', routerLink:['/dashboard']},
         {label: 'Employees', icon: 'fa-users', routerLink:['/employees']},
-        {label: 'TreeView', icon: 'fa-users', routerLink:['/treeview']},
+        // {label: 'TreeView', icon: 'fa-users', routerLink:['/treeview']},
+        {label: 'Contacts', icon: 'fa-phone', routerLink:['/contacts']},
+        {label: 'Appointments', icon: 'fa-address-book', routerLink:['/appointments']},
+        {label: 'Venues', icon: 'fa-address-book', routerLink:['/venues']},
         {label: 'Google', icon: 'fa-google' , url:"https://www.google.com"}
     ];
-    
-    this.http.get('http://localhost:55775/api/venues').subscribe(data => {
-      console.log(data);
-    });
+
   }
 
 //   delete() {

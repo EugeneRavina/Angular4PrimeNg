@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from './../services/employeeService';
 import { Employee } from './../domain/employee';
 import { Employeeclass } from './../domain/employeeclass';
+import {Validators,FormControl,FormGroup,FormBuilder} from '@angular/forms';
+
 
 @Component({
   selector: 'app-employees',
@@ -23,7 +25,11 @@ export class EmployeesComponent implements OnInit {
   loading: boolean;
   employee: Employee = new Employeeclass();
 
-  constructor(private employeeService: EmployeeService) { }
+  userform: FormGroup;
+  
+  submitted: boolean;
+
+constructor(private employeeService: EmployeeService) { }
 
   ngOnInit() {
     this.loading = true;
@@ -49,7 +55,7 @@ export class EmployeesComponent implements OnInit {
         this.employeeService.saveEmployees(this.selectedEmployee);
         tmpEmployeeList[this.employeeList.indexOf(this.selectedEmployee)] = this.selectedEmployee;
     }
-    this.employeeService.saveEmployees(this.selectedEmployee);
+ 
     this.employeeList = tmpEmployeeList;
     this.selectedEmployee = null;
     this.displayDialog = false;

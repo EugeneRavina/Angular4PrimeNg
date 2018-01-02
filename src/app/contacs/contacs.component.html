@@ -1,0 +1,105 @@
+
+<p-panel class="ui-g-12" header="ContactDetail">
+    
+ <p-dataTable [value]="contactList" selectionMode="single" [(selection)]="selectedContact" (onRowSelect)="onRowSelect($event)" 
+ [paginator]="true" [rows]="10" [responsive]="true"  [loading]="loading" loadingIcon="fa-refresh">
+     <p-header>Contacts</p-header>
+     <p-column field="firstName" header="First Name" [editable]="true"[sortable]="true"></p-column>
+     <p-column field="lastName" header="Last Name" [sortable]="true"></p-column>
+     <p-column field="mobilePhone" header="Mobilephone" [sortable]="true"></p-column>
+     <p-column field="streetAddress" header="Street Address" [sortable]="true"></p-column>
+     <p-column field="cityAddress" header="City Address" [sortable]="true"></p-column>
+     <p-column field="zipCode" header="Zipcode" [sortable]="true"></p-column>
+     <p-column field="country" header="Country" [sortable]="true"></p-column>
+     <p-column field="emailAddress" header="EmailAddress" [sortable]="true"></p-column>
+     <p-footer>
+         <div class="ui-helper-clearfix" style="width:100%">
+         <button type="button" pButton icon="fa-plus" style="float:left" (click)="addContact()" label="Add">
+             </button>
+         <button type="button" pButton icon="fa-plus" style="float:left" (click)="deleteContact()" label="Delete">
+             </button>
+         </div>
+     </p-footer>
+ </p-dataTable>
+            
+
+             <!-- <p-dialog header="Contact Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+                 <div class="ui-grid ui-grid-responsive ui-fluid ui-grid-pad" *ngIf="contact">
+                     <div class="ui-grid-row">
+                         <div class="ui-grid-col-4"><label for="name">Contact Name</label></div>
+                         <div class="ui-grid-col-8"><input pInputText id="name" [(ngModel)]="contact.name" /></div>
+                     </div>
+                     <div class="ui-grid-row">
+                         <div class="ui-grid-col-4"><label for="address">Address</label></div>
+                         <div class="ui-grid-col-8"><input pInputText id="address" [(ngModel)]="contact.address" /></div>
+                     </div>
+                     <div class="ui-grid-row">
+                         <div class="ui-grid-col-4"><label for="phone">Telephone</label></div>
+                         <div class="ui-grid-col-8"><input pInputText id="phone" [(ngModel)]="contact.phone" /></div>
+                     </div>
+                     <div class="ui-grid-row">
+                         <div class="ui-grid-col-4"><label for="rating">Rating</label></div>
+                         <div class="ui-grid-col-8"><input pInputText id="rating" [(ngModel)]="contact.rating" /></div>
+                     </div>
+                 </div>
+             <footer>
+                 <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+                     <button type="button" pButton icon="fa-close" (click)="delete()" label="Delete"></button>
+                     <button type="button" pButton icon="fa-check" (click)="save()" label="Save"></button>
+                 </div>
+             </footer>
+             </p-dialog> -->
+ 
+           <!-- End of DataTable -->    
+         </p-panel>
+
+ <p-panel  header="Contact Details" [toggleable]="true" *ngIf="selectedContact">
+     <div class="ui-g">
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="firstName">First Name</label></div>
+                  <div class="ui-g-8"><input pInputText id="firstName" [(ngModel)]="selectedContact.firstName" /></div>
+              </div>
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="lastName">Last Name</label></div>
+                  <div class="ui-g-8"><input pInputText id="lastName" [(ngModel)]="selectedContact.lastName" /></div>
+              </div>
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="mobilePhone">Mobilephone</label></div>
+                  <div class="ui-g-8"><input pInputText id="mobilePhone" [(ngModel)]="selectedContact.mobilePhone" /></div>
+              </div>
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="streetAddress">Street Address</label></div>
+                  <div class="ui-g-8"><input pInputText id="streetAddress" [(ngModel)]="selectedContact.streetAddress" /></div>
+              </div>
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="cityAddress">City Address</label></div>
+                  <div class="ui-g-8"><input pInputText id="cityAddress" [(ngModel)]="selectedContact.cityAddress" /></div>
+              </div>
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="zipCode">Zipcode</label></div>
+                  <div class="ui-g-8"><input pInputText id="zipCode" [(ngModel)]="selectedContact.zipCode" /></div>
+              </div>
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="country">Country</label></div>
+              <div class="ui-g-8"> <!-- <input pInputText id="country" [(ngModel)]="selectedContact.country" /> -->
+                   
+                    <p-dropdown optionLabel="firstName" [options]="countryList" id="country" [(ngModel)]="selectedContact"></p-dropdown>
+              </div>
+               
+              </div>
+              <div class="ui-g-6">
+                  <div class="ui-g-4"><label for="emailAddress">Email Address</label></div>
+                  <div class="ui-g-8"><input pInputText id="emailAddress" [(ngModel)]="selectedContact.emailAddress" /></div>
+              </div>
+            
+          </div>
+      <footer>
+          <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+             <button type="button" pButton icon="fa-floppy-o" (click)="saveContact()" label="Save"></button>
+             <button type="button" pButton icon="fa-trash-o" (click)="cancelContact()" label="Cancel"></button>
+              
+          </div>
+      </footer>
+
+  </p-panel>
+  
