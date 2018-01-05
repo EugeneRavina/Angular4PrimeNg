@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MenuModule, PanelModule, TabViewModule, DataTableModule, SharedModule, DialogModule, InputTextModule, ButtonModule,
-         MenuItem, TreeTableModule,TreeNode,DropdownModule, ToggleButtonModule } from "primeng/primeng";
+         MenuItem, TreeTableModule, TreeNode, DropdownModule, ToggleButtonModule, GrowlModule, InputSwitchModule, CalendarModule,
+         MenubarModule, BreadcrumbModule} from "primeng/primeng";
 import { FormsModule } from '@angular/forms';
-import { Validators,FormControl,FormGroup,FormBuilder} from '@angular/forms';
+import { Validators, FormControl, FormGroup, FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import { RouterModule, Routes} from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -56,8 +57,13 @@ const appRoutes: Routes = [
     HttpClientModule,
     DropdownModule,
     ToggleButtonModule,
+    GrowlModule,
+    ReactiveFormsModule,
+    InputSwitchModule,
+    CalendarModule,
+    MenubarModule,
+    BreadcrumbModule,
     
-
     RouterModule.forRoot(appRoutes)
   ],
   providers: [],

@@ -5,6 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { Contact } from '../domain/contact';
 import { Contactclass } from '../domain/contactclass';
 import { SelectItem } from 'primeng/primeng';
+import { Message } from 'primeng/components/common/api';
+import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { MenuItem } from 'primeng/components/common/menuitem';
 
 @Component({
   selector: 'app-contacs',
@@ -26,15 +29,23 @@ export class ContacsComponent implements OnInit {
   loading: boolean;
   contact: Contact = new Contactclass();
 
-constructor(private contactService: ContactService) { 
-  this.countryList = [
-    {label:'Select City', value:null},
-    {label:'New York', value:{id:1, name: 'New York', code: 'NY'}},
-    {label:'Rome', value:{id:2, name: 'Rome', code: 'RM'}},
-    {label:'London', value:{id:3, name: 'London', code: 'LDN'}},
-    {label:'Istanbul', value:{id:4, name: 'Istanbul', code: 'IST'}},
-    {label:'Paris', value:{id:5, name: 'Paris', code: 'PRS'}}
-];
+  msgs: Message[] = [];
+  contactForm: FormGroup;
+  submitted: boolean;
+  breadcrumb: MenuItem[];
+  
+constructor(private contactService: ContactService, private fb: FormBuilder) { 
+
+  this.contactForm = this.fb.group({
+    'firstname': new FormControl('', Validators.required),
+    'lastname': new FormControl('', Validators.required),
+    'mobilephone': new FormControl('', Validators.required),
+    'streetaddress': new FormControl('', Validators.required),
+    'cityaddress': new FormControl('', Validators.required),
+    'zipcode': new FormControl('', Validators.required),
+    'country': new FormControl('', Validators.required), 
+    'emailaddress': new FormControl('', Validators.required),
+  });
 }
 
   ngOnInit() {
@@ -43,6 +54,12 @@ constructor(private contactService: ContactService) {
       this.contactService.getContacts().then(contacts => this.contactList = contacts);
       this.loading = false;
     }, 1000);
+
+    this.breadcrumb = [
+      {label:'Dashboard', routerLink:['/dashboard']},
+      {label:'Contacts', routerLink:['/contacts']},
+  ];
+
   }
   addContact() {
     this.isNewContact = true;
@@ -55,9 +72,17 @@ constructor(private contactService: ContactService) {
     if(this.isNewContact){
         this.contactService.addContacts(this.selectedContact);
         tmpContactList.push(this.selectedContact);
+        this.submitted = true;
+        this.msgs = [];
+        this.msgs.push({severity:'info', summary:'Success', detail:'Added Contact Details'});
     }else{
-        this.contactService.saveContacts(this.selectedContact);
+        this.contactService.saveContacts(this.selectedContact.contactId, this.selectedContact).then(contacts =>{
         tmpContactList[this.contactList.indexOf(this.selectedContact)] = this.selectedContact;
+        });
+        this.submitted = true;
+        this.msgs = [];
+        this.msgs.push({severity:'warn', summary:'Modified', detail:'Modified Contact Details'});
+       
     }
  
     this.contactList = tmpContactList;
@@ -71,6 +96,9 @@ constructor(private contactService: ContactService) {
       let index = this.findSelectedContactIndex();
       this.contactList = this.contactList.filter((val,i) => i!=index);
       this.contactService.deleteContacts(this.selectedContact.contactId);
+      this.submitted = true;
+        this.msgs = [];
+        this.msgs.push({severity:'error', summary:'Deleted', detail:'Deleted Contact Details'});
       this.selectedContact = null;
       this.displayDialog = false;
     }

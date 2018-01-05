@@ -13,6 +13,7 @@ export class AppComponent  {
   results = '';
 
   items: MenuItem[];
+  header:MenuItem[];
 
   constructor(private http: HttpClient) { }
 
@@ -27,6 +28,12 @@ export class AppComponent  {
         {label: 'Venues', icon: 'fa-address-book', routerLink:['/venues']},
         {label: 'Google', icon: 'fa-google' , url:"https://www.google.com"}
     ];
+    this.header = [
+      { 
+        icon: 'fa-book fa-4x',
+        label: 'DigiBook'
+      }
+    ]
 
   }
 

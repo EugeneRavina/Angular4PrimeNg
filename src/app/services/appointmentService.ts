@@ -16,10 +16,10 @@ constructor(private http: HttpClient) {}
     addAppointments(addAppointments) {
         return this.http.post('http://localhost:55775/api/appointments/',addAppointments)
                 .toPromise()
-                .then(data => { return data as Appointment[]; });
+                .then(data => { return data as Appointment; });
     }
-    saveAppointments(appointment) {
-        return this.http.put('http://localhost:55775/api/appointments/?id='+ appointment.appointmentId, appointment)
+    saveAppointments(id,appointment) {
+        return this.http.put('http://localhost:55775/api/appointments/?id='+ id, appointment)
                 .toPromise()
                 .then(data => { return data as Appointment[]; });
     }

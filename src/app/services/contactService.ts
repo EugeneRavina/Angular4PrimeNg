@@ -20,8 +20,8 @@ constructor(private http: HttpClient) {}
                 .toPromise()
                 .then(data => { return data as Contact[]; });
     }
-    saveContacts(contact) {
-        return this.http.put('http://localhost:55775/api/contacts/?id='+ contact.contactId, contact)
+    saveContacts(id,contact) {
+        return this.http.put('http://localhost:55775/api/contacts/?id='+ id, contact)
                 .toPromise()
                 .then(data => { return data as Contact[]; });
     }

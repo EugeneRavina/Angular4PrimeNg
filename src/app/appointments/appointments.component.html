@@ -27,40 +27,39 @@
  <p-panel  header="Appointment Details" [toggleable]="true" *ngIf="selectedAppointment">
      <div class="ui-g">
               <div class="ui-g-6">
-                  <div class="ui-g-4"><label for="guestId">GuestId</label></div>
-                  <div class="ui-g-8"> <p-dropdown optionLabel="firstName" [options]="guestList" id="country" [(ngModel)]="selectedGuest"></p-dropdown>
-                </div>
+                  <label class="ui-g-12 ui-md-4" for="guestId">GuestId</label>
+                  <p-dropdown class="ui-g-12 ui-md-8" optionLabel="firstName" [options]="guestList" [(ngModel)]="selectedGuest"></p-dropdown>
+               
               </div>
               <div class="ui-g-6">
-                  <div class="ui-g-4"><label for="hostId">HostId</label></div>
-                  <div class="ui-g-8"><p-dropdown optionLabel="firstName" [options]="hostList" id="country" [(ngModel)]="selectedHost"></p-dropdown>
-             </div>
+                  <label class="ui-g-12 ui-md-4" for="hostId">HostId</label>
+                 <p-dropdown class="ui-g-12 ui-md-8" optionLabel="firstName" [options]="hostList"  [(ngModel)]="selectedHost"></p-dropdown>       
               </div>
               <div class="ui-g-6">
-                  <div class="ui-g-4"><label for="startTime">startTime</label></div>
-                  <div class="ui-g-8"><input pInputText id="startTime" [(ngModel)]="selectedAppointment.startTime" /></div>
+                  <label class="ui-g-12 ui-md-4" for="startTime">startTime</label>
+                  <input class="ui-g-12 ui-md-8" pInputText id="startTime" [(ngModel)]="selectedAppointment.startTime" />
               </div>
               <div class="ui-g-6">
-                  <div class="ui-g-4"><label for="endTime">endTime</label></div>
-                  <div class="ui-g-8"><input pInputText id="endTime" [(ngModel)]="selectedAppointment.endTime" /></div>
+                  <label class="ui-g-12 ui-md-4" for="endTime">endTime</label>
+                  <input class="ui-g-12 ui-md-8" pInputText id="endTime" [(ngModel)]="selectedAppointment.endTime" />
               </div>
               <div class="ui-g-6">
-                  <div class="ui-g-4"><label for="isCancelled">isCancelled</label></div>
-                  <div class="ui-g-8"><input pInputText id="isCancelled" [(ngModel)]="selectedAppointment.isCancelled" /></div>
+                  <label class="ui-g-12 ui-md-4" for="isCancelled">isCancelled</label>
+                  <p-inputSwitch class="ui-g-12 ui-md-8" onLabel="True" offLabel="False" [(ngModel)]="selectedAppointment.isCancelled"></p-inputSwitch>
+                  <!-- <input class="ui-g-12 ui-md-8" pInputText id="isCancelled" [(ngModel)]="selectedAppointment.isCancelled" /> -->
               </div>
               <div class="ui-g-6">
-                  <div class="ui-g-4"><label for="isDone">isDone</label></div>
-                  <div class="ui-g-8"> 
-                    
-                   <input pInputText id="isDone" [(ngModel)]="selectedAppointment.isDone" /></div> 
+                  <label class="ui-g-12 ui-md-4" for="isDone">isDone</label>    
+                  <p-inputSwitch class="ui-g-12 ui-md-8" onLabel="True" offLabel="False" [(ngModel)]="selectedAppointment.isDone"></p-inputSwitch>           
+                  <!-- <input class="ui-g-12 ui-md-8" pInputText id="isDone" [(ngModel)]="selectedAppointment.isDone" /> -->
               </div>
               <div class="ui-g-6">
-                  <div class="ui-g-4"><label for="notes">Notes</label></div>
-                  <div class="ui-g-8"><input pInputText id="notes" [(ngModel)]="selectedAppointment.notes" /></div>
+                  <label class="ui-g-12 ui-md-4" for="notes">Notes</label>
+                  <input class="ui-g-12 ui-md-8" pInputText id="notes" [(ngModel)]="selectedAppointment.notes" />
               </div>
               <div class="ui-g-6">
-                  <div class="ui-g-4"><label for="appointmentDate">appointmentDate</label></div>
-                  <div class="ui-g-8"><input pInputText id="appointmentDate" [(ngModel)]="selectedAppointment.appointmentDate" /></div>
+                  <label class="ui-g-12 ui-md-4" for="appointmentDate">appointmentDate</label>
+                  <p-calendar [(ngModel)]="selectedDate" [showIcon]="true" [disabledDates]="invalidDates"></p-calendar>
               </div>
             
           </div>

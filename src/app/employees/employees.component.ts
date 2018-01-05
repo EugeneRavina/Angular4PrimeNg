@@ -1,9 +1,11 @@
-
+import { MenuItem } from 'primeng/primeng';
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from './../services/employeeService';
 import { Employee } from './../domain/employee';
 import { Employeeclass } from './../domain/employeeclass';
-import {Validators,FormControl,FormGroup,FormBuilder} from '@angular/forms';
+import { Validators,FormControl,FormGroup,FormBuilder } from '@angular/forms';
+import { Message, SelectItem } from 'primeng/components/common/api';
+import { RouterLink } from '@angular/router/src/directives/router_link';
 
 
 @Component({
@@ -25,11 +27,12 @@ export class EmployeesComponent implements OnInit {
   loading: boolean;
   employee: Employee = new Employeeclass();
 
-  userform: FormGroup;
-  
+  msgs: Message[] = [];
+  employeeForm: FormGroup;
   submitted: boolean;
+  breadcrumb: MenuItem[];
 
-constructor(private employeeService: EmployeeService) { }
+constructor(private employeeService: EmployeeService, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.loading = true;
@@ -37,12 +40,31 @@ constructor(private employeeService: EmployeeService) { }
       this.employeeService.getEmployees().then(employees => this.employeeList = employees);
       this.loading = false;
     }, 1000);
+
+    this.employeeForm = this.fb.group({
+      'firstname': new FormControl('', Validators.required),
+      'lastname': new FormControl('', Validators.required),
+      'mobilephone': new FormControl('', Validators.required),
+      'emailaddress': new FormControl('', Validators.required),
+      'officephone': new FormControl('', Validators.required),
+      'extension': new FormControl('', Validators.required),
+      'notes': new FormControl('', Validators.required)
+    });
+
+    this.breadcrumb = [
+      {label:'Dashboard', routerLink:['/dashboard']},
+      {label:'Employees', routerLink:['/employees']},
+  ];
     //this.selectedEmployee = this.employeeList[0]; 
   }
 
   addEmployee() {
     this.isNewEmployee = true;
-     this.selectedEmployee = new Employeeclass;
+    this.selectedEmployee = new Employeeclass;
+    this.displayDialog = true;
+  }
+  editEmployee(){
+    this.selectedEmployee = new Employeeclass;
     this.displayDialog = true;
   }
 
@@ -51,15 +73,20 @@ constructor(private employeeService: EmployeeService) { }
     if(this.isNewEmployee){
         this.employeeService.addEmployees(this.selectedEmployee);
         tmpEmployeeList.push(this.selectedEmployee);
+        this.submitted = true;
+        this.msgs = [];
+        this.msgs.push({severity:'info', summary:'Success', detail:'Added Employee'});
     }else{
         this.employeeService.saveEmployees(this.selectedEmployee);
         tmpEmployeeList[this.employeeList.indexOf(this.selectedEmployee)] = this.selectedEmployee;
+        this.submitted = true;
+        this.msgs = [];
+        this.msgs.push({severity:'warn', summary:'Modified', detail:'Modified Employee Details'});
     }
  
     this.employeeList = tmpEmployeeList;
     this.selectedEmployee = null;
     this.displayDialog = false;
- 
   }
 
   deleteEmployee(){
@@ -67,8 +94,11 @@ constructor(private employeeService: EmployeeService) { }
       let index = this.findSelectedEmployeeIndex();
       this.employeeList = this.employeeList.filter((val,i) => i!=index);
       this.employeeService.deleteEmployees(this.selectedEmployee.employeeId);
+        this.submitted = true;
+        this.msgs = [];
+        this.msgs.push({severity:'error', summary:'Danger', detail:'Deleted Employee'});
       this.selectedEmployee = null;
-      this.displayDialog = false;
+      this.displayDialog = false;     
     }
      
   }

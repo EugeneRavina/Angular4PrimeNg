@@ -19,25 +19,37 @@
  </p-dataTable>
 </p-panel>
 
+<p-growl [value]="msgs" life="3000"></p-growl>
+
+<form [formGroup]="venueForm">
  <p-panel  header="Venue Details" [toggleable]="true" *ngIf="selectedVenue">
      <div class="ui-g">
               <div class="ui-g-6">
-                  <div class="ui-g-4"><label for="venueName">Venue Name</label></div>
-                  <div class="ui-g-8"><input pInputText id="venueName" [(ngModel)]="selectedVenue.venueName" /></div>
+                  <label class="ui-g-12 ui-md-4" for="venueName">Venue Name</label>
+                  <input class="ui-g-12 ui-md-8" pInputText id="venueName" formControlName="venuename" [(ngModel)]="selectedVenue.venueName" />
+                  <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!venueForm.controls['venuename'].valid&&venueForm.controls['venuename'].dirty">
+                        <i class="fa fa-close"></i>
+                        Venue is required
+                  </div>
               </div>
               <div class="ui-g-6">
-                  <div class="ui-g-4"><label for="description">Description</label></div>
-                  <div class="ui-g-8"><input pInputText id="description" [(ngModel)]="selectedVenue.description" /></div>
+                  <label class="ui-g-12 ui-md-4" for="description">Description</label>
+                  <input class="ui-g-12 ui-md-8" pInputText id="description" formControlName="description" [(ngModel)]="selectedVenue.description" />
+                  <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!venueForm.controls['description'].valid&&venueForm.controls['description'].dirty">
+                        <i class="fa fa-close"></i>
+                        Description is required
+                  </div>
               </div>          
             
           </div>
       <footer>
           <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-             <button type="button" pButton icon="fa-floppy-o" (click)="saveVenue()" label="Save"></button>
+             <button type="button" pButton icon="fa-floppy-o" (click)="saveVenue()" [disabled]="!venueForm.valid" label="Save"></button>
              <button type="button" pButton icon="fa-trash-o" (click)="cancelVenue()" label="Cancel"></button>
               
           </div>
       </footer>
 
   </p-panel>
+</form>
   

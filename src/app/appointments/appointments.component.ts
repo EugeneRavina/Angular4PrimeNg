@@ -19,7 +19,13 @@ export class AppointmentsComponent implements OnInit {
 
   clonedSelectedAppointment: Appointment;
   indexSelected: number;
-  
+  checked: boolean;
+  selectedDate: Date;
+
+  invalidDates: Array<Date>;
+
+  indexOfAppointment:number;
+
   selectedGuest: Contact;
   selectedHost: Employee;
   guestList: Contact[];
@@ -46,8 +52,9 @@ export class AppointmentsComponent implements OnInit {
           this.appointmentService.getAppointments().then(appointments => {
             this.appointmentList = appointments
             for(let i=0;i < this.appointmentList.length;i++){
-              this.appointmentList[i].guestName = this.guestList.find(id=>id.contactId=this.appointmentList[i].guestId).firstName;
-              this.appointmentList[i].hostName = this.hostList.find(id=>id.employeeId=this.appointmentList[i].hostId).firstName;
+              this.appointmentList[i].guestName = this.guestList.find(id=>id.contactId==this.appointmentList[i].guestId).firstName;
+              this.appointmentList[i].hostName = this.hostList.find(id=>id.employeeId==this.appointmentList[i].hostId).firstName;
+              this.appointmentList[i].appointmentDate = new Date(this.appointmentList[i].appointmentDate).toLocaleDateString();
             }
           });
         });
@@ -55,6 +62,10 @@ export class AppointmentsComponent implements OnInit {
      
       this.loading = false;
     }, 1000);
+    let today = new Date();
+    let invalidDate = new Date();
+    invalidDate.setDate(today.getDate() - 1);
+    this.invalidDates = [today,invalidDate];
   }
   addAppointment() {
     this.isNewAppointment = true;
@@ -68,19 +79,26 @@ export class AppointmentsComponent implements OnInit {
     let tmpAppointmentList = [...this.appointmentList];
     this.selectedAppointment.guestId = this.selectedGuest.contactId;
     this.selectedAppointment.hostId = this.selectedHost.employeeId;
-    
-    if(this.isNewAppointment){
-        this.appointmentService.addAppointments(this.selectedAppointment);
-        tmpAppointmentList.push(this.selectedAppointment);
+    this.selectedAppointment.appointmentDate = this.selectedDate;
+
+    if(this.isNewAppointment){  
+      this.appointmentService.addAppointments(this.selectedAppointment).then(appointments => {
+        tmpAppointmentList.push(appointments);
+        this.appointmentList = tmpAppointmentList;
+
+        this.selectedAppointment = null;
+      });
     }else{
-        this.appointmentService.saveAppointments(this.selectedAppointment);
-        tmpAppointmentList[this.appointmentList.indexOf(this.selectedAppointment)] = this.selectedAppointment;
+        // this.appointmentService.saveAppointments(this.selectedAppointment);
+        // tmpAppointmentList[this.appointmentList.indexOf(this.selectedAppointment)] = this.selectedAppointment;
+
+        this.appointmentService.saveAppointments(this.selectedAppointment.appointmentId, this.selectedAppointment).then(appointments => {
+          tmpAppointmentList[this.indexOfAppointment] = this.selectedAppointment;
+          this.appointmentList = tmpAppointmentList;
+          this.selectedAppointment = null;
+        });
     }
- 
-    this.appointmentList = tmpAppointmentList;
     this.selectedAppointment = null;
-    this.displayDialog = false;
- 
   }
 
   deleteAppointment(){
@@ -97,8 +115,14 @@ export class AppointmentsComponent implements OnInit {
   onRowSelect(event) {
           this.isNewAppointment = false;
           this.selectedAppointment;
-          this.cloneAppointment = this.cloneRecord(this.selectedAppointment);
-          this.displayDialog = true;
+          // this.cloneAppointment = this.cloneRecord(this.selectedAppointment);
+          // this.displayDialog = true;
+
+          //this.clonedSelectedAppointment = JSON.parse(JSON.stringify(this.selectedAppointment)); // cloned value of selected
+
+          this.selectedGuest = this.guestList.find(x => x.contactId == this.selectedAppointment.guestId);
+          this.selectedHost = this.hostList.find(x => x.employeeId == this.selectedAppointment.hostId);
+          this.selectedAppointment.appointmentDate = new Date(this.selectedAppointment.appointmentDate).toLocaleDateString();
   } 
 
   cloneRecord(r: Appointment): Appointment {
